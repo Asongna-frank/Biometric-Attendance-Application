@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     #Third Parties
     'rest_framework',
 
-    "bioattend.apps.BioattendConfig"
+    "bioattend.apps.BioattendConfig",
+    "api.apps.ApiConfig",
 
 ]
 

@@ -19,7 +19,7 @@ class Student(models.Model):
 
     userID = models.AutoField(primary_key=True)
     matricule = models.CharField(max_length=9)
-    fullName = models.CharField(max_length=70)
+    studentName = models.CharField(max_length=70)
     #    role = models.CharField(max_length=13, choices=ROLE_CHOICES)
     email = models.EmailField(max_length=90)
     password = models.CharField(max_length=20)
@@ -29,3 +29,20 @@ class Student(models.Model):
 
     def __str__(self):
         return self.matricule
+
+
+class Lecturer(models.Model):
+    userID = models.AutoField(primary_key=True)
+#    lecturerID = models.AutoField(primary_key=True)
+    lecturerName = models.CharField(max_length=70)
+    number = models.CharField(max_length=90)
+    email = models.EmailField(max_length=90)
+    password = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.lecturerName
+
+    # class Meta:
+    #     constraints = [
+    #         models.UniqueConstraint(fields=['userID', 'lecturerID'], name='composite_pk')
+    #     ]

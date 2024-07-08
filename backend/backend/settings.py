@@ -41,10 +41,13 @@ INSTALLED_APPS = [
     #Third Parties
     'rest_framework',
 
-    "bioattend.apps.BioattendConfig",
-    "api.apps.ApiConfig",
+    'bioattend.apps.BioattendConfig',
+    'api.apps.ApiConfig',
+    'users.apps.UsersConfig',
 
 ]
+
+AUTH_USER_MODEL = "users.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

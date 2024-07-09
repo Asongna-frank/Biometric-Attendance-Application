@@ -5,6 +5,7 @@ from api.viewsets.courseViewsets import CourseListViewset
 from api.viewsets.teachesViewsets import TeachesListViewset
 from api.viewsets.attendanceViewsets import AttendanceListViewset
 from api.viewsets.enrollsViewsets import EnrollsListViewset
+from api.viewsets.usersViewsets import UsersListViewset
 
 routes = routers.SimpleRouter()
 
@@ -14,6 +15,7 @@ routes.register('course', CourseListViewset, basename='Course')
 routes.register('teaches', TeachesListViewset, basename='Teaches')
 routes.register('attendance', AttendanceListViewset, basename='Attendance')
 routes.register('enrolls', EnrollsListViewset, basename='Enrolls')
+routes.register('users', UsersListViewset, basename='Users')
 
 urlpatterns = routes.urls
 

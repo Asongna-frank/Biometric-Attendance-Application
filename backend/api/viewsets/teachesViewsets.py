@@ -9,11 +9,6 @@ class TeachesListViewset(viewsets.ModelViewSet):
     serializer_class = TeachesSerializer
     queryset = Teaches.objects.all()
 
-    def delete(self, request, pk=None):
-        instance = self.get_object()
-        instance.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
     def get_queryset(self):
         queryset = Teaches.objects.all()
 

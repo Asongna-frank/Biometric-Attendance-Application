@@ -9,11 +9,6 @@ class EnrollsListViewset(viewsets.ModelViewSet):
     serializer_class = EnrollsSerializer
     queryset = Enrolls.objects.all()
 
-    def delete(self, request, pk=None):
-        instance = self.get_object()
-        instance.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
     def get_queryset(self):
         queryset = Enrolls.objects.all()
 

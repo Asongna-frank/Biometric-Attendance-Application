@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.hashers import make_password
 
 class Student(models.Model):
     department_choices = [
@@ -20,7 +21,7 @@ class Student(models.Model):
     matricule = models.CharField(max_length=9)
     studentName = models.CharField(max_length=70)
     email = models.EmailField(max_length=90)
-    password = models.CharField(max_length=20)
+    password = models.CharField(max_length=128)
     department = models.CharField(max_length=50, choices=department_choices)
     level = models.CharField(max_length=10, choices=level_choices)
 
@@ -28,8 +29,13 @@ class Student(models.Model):
         ordering = ["studentName", "department", "level"]
 
         indexes = [
-            models.Index(fields=["userID","matricule"])
+            models.Index(fields=["userID", "matricule"])
         ]
+
+    def save(self, *args, **kwargs):
+        if self.pk is None or not Student.objects.get(pk=self.pk).password == self.password:
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.studentName
@@ -40,7 +46,12 @@ class Lecturer(models.Model):
     lecturerName = models.CharField(max_length=70)
     number = models.CharField(max_length=9)
     email = models.EmailField(max_length=90)
-    password = models.CharField(max_length=20)
+    password = models.CharField(max_length=128)
+
+    def save(self, *args, **kwargs):
+        if self.pk is None or not Lecturer.objects.get(pk=self.pk).password == self.password:
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.lecturerName
@@ -71,6 +82,7 @@ class Teaches(models.Model):
     def __str__(self):
         return f"{self.lecturerID} teaches {self.courseID}"
 
+
 class Enrolls(models.Model):
     studentID = models.ForeignKey(Student, on_delete=models.CASCADE)
     courseID = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -80,6 +92,7 @@ class Enrolls(models.Model):
 
     def __str__(self):
         return f"{self.studentID} enrolled for {self.courseID}"
+
 
 class Attendance(models.Model):
     status_choices = [

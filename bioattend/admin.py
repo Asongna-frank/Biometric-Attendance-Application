@@ -87,4 +87,3 @@ class TimetableAdmin(admin.ModelAdmin):
 
 
 
-    

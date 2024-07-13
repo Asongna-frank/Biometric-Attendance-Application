@@ -18,22 +18,21 @@ class Student(models.Model):
     ]
 
     userID = models.AutoField(primary_key=True)
-    matricule = models.CharField(max_length=9)
+    matricule = models.CharField(max_length=9, unique=True)
     studentName = models.CharField(max_length=70)
-    email = models.EmailField(max_length=90)
+    email = models.EmailField(max_length=90, unique=True)
     password = models.CharField(max_length=128)
     department = models.CharField(max_length=50, choices=department_choices)
     level = models.CharField(max_length=10, choices=level_choices)
 
     class Meta:
-        ordering = ["studentName", "department", "level"]
-
+        ordering = ["userID", "studentName", "department", "level"]
         indexes = [
-            models.Index(fields=["userID", "matricule"])
+            models.Index(fields=["userID", "matricule"]),
         ]
 
     def save(self, *args, **kwargs):
-        if self.pk is None or not Student.objects.get(pk=self.pk).password == self.password:
+        if self.pk is None or not Student.objects.filter(pk=self.pk).exists():
             self.password = make_password(self.password)
         super().save(*args, **kwargs)
 
@@ -44,12 +43,15 @@ class Student(models.Model):
 class Lecturer(models.Model):
     userID = models.AutoField(primary_key=True)
     lecturerName = models.CharField(max_length=70)
-    number = models.CharField(max_length=9)
-    email = models.EmailField(max_length=90)
+    number = models.CharField(max_length=9, unique=True)
+    email = models.EmailField(max_length=90, unique=True)
     password = models.CharField(max_length=128)
 
+    class Meta:
+        ordering = ["userID", "lecturerName"]
+
     def save(self, *args, **kwargs):
-        if self.pk is None or not Lecturer.objects.get(pk=self.pk).password == self.password:
+        if self.pk is None or not Lecturer.objects.filter(pk=self.pk).exists():
             self.password = make_password(self.password)
         super().save(*args, **kwargs)
 
@@ -67,6 +69,9 @@ class Course(models.Model):
     courseName = models.CharField(max_length=70)
     courseCode = models.CharField(max_length=7)
     semester = models.CharField(max_length=20, choices=semester_choices)
+
+    class Meta:
+        ordering = ["courseID", "courseName"]
 
     def __str__(self):
         return self.courseName
@@ -106,5 +111,50 @@ class Attendance(models.Model):
     date = models.DateTimeField()
     status = models.CharField(max_length=7, choices=status_choices)
 
+    class Meta:
+        ordering = ["recordID", "student__studentName", "course__courseName", "-date"]
+        indexes = [
+            models.Index(fields=["student", "course"]),
+        ]
+
     def __str__(self):
         return f"{self.student.studentName} - {self.course.courseName}"
+
+
+class Timetable(models.Model):
+    day_choices = [
+        ('monday', 'Monday'),
+        ('tuesday', 'Tuesday'),
+        ('wednesday', 'Wednesday'),
+        ('thursday', 'Thursday'),
+        ('friday', 'Friday'),
+        ('saturday', 'Saturday'),
+    ]
+
+    timetableID = models.AutoField(primary_key=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
+    day = models.CharField(max_length=10, choices=day_choices)
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    room = models.CharField(max_length=50)
+
+    class Meta:
+        ordering = ["day", "start_time", "course"]
+        indexes = [
+            models.Index(fields=["day", "course"]),
+        ]
+
+    def __str__(self):
+        return f"{self.course.courseName} by {self.lecturer.lecturerName} on {self.day} from {self.start_time} to {self.end_time}"
+
+
+class Fingerprint(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    fingerprint_data = models.BinaryField()
+
+    class Meta:
+        unique_together = (('student',),)
+
+    def __str__(self):
+        return f"Fingerprint data for {self.student.studentName}"

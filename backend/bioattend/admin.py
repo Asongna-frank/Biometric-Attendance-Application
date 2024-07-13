@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Student, Lecturer, Course, Teaches, Attendance, Enrolls
+from .models import Student, Lecturer, Course, Teaches, Attendance, Enrolls, Timetable, Fingerprint
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
@@ -38,3 +38,15 @@ class EnrollsAdmin(admin.ModelAdmin):
     list_display = ["studentID", "courseID"]
     search_fields = ["studentID", "courseID"]
     list_filter = ["courseID"]
+
+@admin.register(Timetable)
+class TimetableAdmin(admin.ModelAdmin):
+    list_display = ["timetableID", "course", "lecturer", "day", "start_time", "end_time", "room"]
+    search_fields = ["course", "lecturer", "day", "start_time", "end_time", "room"]
+    list_filter = ["day", "course", "room", "start_time", "end_time"]
+
+@admin.register(Fingerprint)
+class FingerprintAdmin(admin.ModelAdmin):
+    list_display = ["student", "fingerprint_data"]
+    search_fields = ["student"]
+    list_filter = ["student"]

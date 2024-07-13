@@ -55,7 +55,7 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ["courseName", "courseCode", "semester"]
     list_filter = ["semester"]
     actions = [upload_file]
-
+#
 
 class TeachesAdmin(admin.ModelAdmin):
     list_display = ["lecturerID", "courseID"]

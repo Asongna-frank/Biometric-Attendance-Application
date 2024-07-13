@@ -147,14 +147,3 @@ class Timetable(models.Model):
 
     def __str__(self):
         return f"{self.course.courseName} by {self.lecturer.lecturerName} on {self.day} from {self.start_time} to {self.end_time}"
-
-
-class Fingerprint(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    fingerprint_data = models.BinaryField()
-
-    class Meta:
-        unique_together = (('student',),)
-
-    def __str__(self):
-        return f"Fingerprint data for {self.student.studentName}"

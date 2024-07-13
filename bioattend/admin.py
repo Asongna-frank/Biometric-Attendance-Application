@@ -37,47 +37,48 @@ def upload_file(modeladmin, request, queryset):
 upload_file.short_description = "Upload CSV/Excel/JSON file to this table"
 
 
+@admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = ["userID", "matricule", "studentName", "email", "password", "department", "level"]
     search_fields = ["matricule", "studentName", "department", "level"]
     list_filter = ["department", "level"]
     actions = [upload_file]
 
-
+@admin.register(Lecturer)
 class LecturerAdmin(admin.ModelAdmin):
     list_display = ["userID", "lecturerName", "number", "email", "password"]
     search_fields = ["lecturerName", "number", "email"]
     actions = [upload_file]
 
-
+@admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     list_display = ["courseID", "courseName", "courseCode", "semester"]
     search_fields = ["courseName", "courseCode", "semester"]
     list_filter = ["semester"]
     actions = [upload_file]
-#
 
+@admin.register(Teaches)
 class TeachesAdmin(admin.ModelAdmin):
     list_display = ["lecturerID", "courseID"]
     search_fields = ["lecturerID", "courseID"]
     list_filter = ["courseID"]
     actions = [upload_file]
 
-
+@admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
     list_display = ["recordID", "student", "course", "date", "status"]
     search_fields = ["student", "course", "date", "status"]
     list_filter = ["course", "status"]
     actions = [upload_file]
 
-
+@admin.register(Enrolls)
 class EnrollsAdmin(admin.ModelAdmin):
     list_display = ["studentID", "courseID"]
     search_fields = ["studentID", "courseID"]
     list_filter = ["courseID"]
     actions = [upload_file]
 
-
+@admin.register(Timetable)
 class TimetableAdmin(admin.ModelAdmin):
     list_display = ["timetableID", "course", "lecturer", "day", "start_time", "end_time", "room"]
     search_fields = ["course", "lecturer", "day", "start_time", "end_time", "room"]
@@ -85,18 +86,5 @@ class TimetableAdmin(admin.ModelAdmin):
     actions = [upload_file]
 
 
-class FingerprintAdmin(admin.ModelAdmin):
-    list_display = ["student", "fingerprint_data"]
-    search_fields = ["student"]
-    list_filter = ["student"]
-    actions = [upload_file]
 
-
-admin.site.register(Student, StudentAdmin)
-admin.site.register(Lecturer, LecturerAdmin)
-admin.site.register(Course, CourseAdmin)
-admin.site.register(Teaches, TeachesAdmin)
-admin.site.register(Attendance, AttendanceAdmin)
-admin.site.register(Enrolls, EnrollsAdmin)
-admin.site.register(Timetable, TimetableAdmin)
-admin.site.register(Fingerprint, FingerprintAdmin)
+    

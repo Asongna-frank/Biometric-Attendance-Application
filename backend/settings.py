@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = "users.User"
 
+#added whitenoise comment
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',

@@ -43,12 +43,19 @@ INSTALLED_APPS = [
 
     #Third Parties
     'rest_framework',
+    'rest_framework_simplejwt',
 
     'bioattend.apps.BioattendConfig',
     'api.apps.ApiConfig',
     'users.apps.UsersConfig',
 
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 AUTH_USER_MODEL = "users.User"
 
@@ -99,7 +106,7 @@ DATABASES = {
     }
 }
 
-DATABASES["default"] = dj_database_url.parse(config("DATABASE_URL"))
+#DATABASES["default"] = dj_database_url.parse(config("DATABASE_URL"))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

@@ -1,49 +1,73 @@
+from django import forms
 from django.contrib import admin
-from .models import Student, Lecturer, Course, Teaches, Attendance, Enrolls, Timetable
+from .models import *
+from users.models import User
+from users.custom_admin import custom_admin_site
 
+class StudentForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=User.objects.all())
 
-@admin.register(Student)
+    class Meta:
+        model = Student
+        fields = ['user', 'matricule', 'department', 'level']
+
+class LecturerForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=User.objects.all())
+
+    class Meta:
+        model = Lecturer
+        fields = ['user']
+
+class AdministratorForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=User.objects.all())
+
+    class Meta:
+        model = Administrator
+        fields = ['user']
+
+@admin.register(Student, site=custom_admin_site)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ["userID", "matricule", "studentName", "email", "password", "department", "level"]
-    search_fields = ["matricule", "studentName", "department", "level"]
-    list_filter = ["department", "level"]
+    form = StudentForm
+    list_display = ['get_user_name', 'matricule', 'department', 'level']
+    search_fields = ['user__email', 'user__user_name', 'matricule', 'department', 'level']
 
+    def get_user_name(self, obj):
+        return obj.user.user_name
+    get_user_name.short_description = 'User Name'
 
-@admin.register(Lecturer)
+@admin.register(Lecturer, site=custom_admin_site)
 class LecturerAdmin(admin.ModelAdmin):
-    list_display = ["userID", "lecturerName", "number", "email", "password"]
-    search_fields = ["lecturerName", "number", "email"]
+    form = LecturerForm
+    list_display = ['get_user_name', 'lecturerID']
+    search_fields = ['user__email', 'user__user_name', 'lecturerID']
 
-@admin.register(Course)
+    def get_user_name(self, obj):
+        return obj.user.user_name
+    get_user_name.short_description = 'User Name'
+
+@admin.register(Administrator, site=custom_admin_site)
+class AdministratorAdmin(admin.ModelAdmin):
+    form = AdministratorForm
+    list_display = ['get_user_name', 'administratorID']
+    search_fields = ['user__email', 'user__user_name', 'administratorID']
+
+    def get_user_name(self, obj):
+        return obj.user.user_name
+    get_user_name.short_description = 'User Name'
+
+
+@admin.register(Course, site=custom_admin_site)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ["courseID", "courseName", "courseCode", "semester"]
-    search_fields = ["courseName", "courseCode", "semester"]
-    list_filter = ["semester"]
+    list_display = ('courseCode', 'courseName', 'get_course_description')
 
+    def get_course_description(self, obj):
+        return obj.courseDescription
+    get_course_description.short_description = 'Course Description'
 
-@admin.register(Teaches)
-class TeachesAdmin(admin.ModelAdmin):
-    list_display = ["lecturerID", "courseID"]
-    search_fields = ["lecturerID", "courseID"]
-    list_filter = ["courseID"]
-
-
-@admin.register(Attendance)
+@admin.register(Attendance, site=custom_admin_site)
 class AttendanceAdmin(admin.ModelAdmin):
-    list_display = ["recordID", "student", "course", "date", "status"]
-    search_fields = ["student", "course", "date", "status"]
-    list_filter = ["course", "status"]
+    list_display = ('student', 'course', 'date', 'status')
 
-
-@admin.register(Enrolls)
-class EnrollsAdmin(admin.ModelAdmin):
-    list_display = ["studentID", "courseID"]
-    search_fields = ["studentID", "courseID"]
-    list_filter = ["courseID"]
-
-
-@admin.register(Timetable)
+@admin.register(Timetable, site=custom_admin_site)
 class TimetableAdmin(admin.ModelAdmin):
-    list_display = ["timetableID", "course", "lecturer", "day", "start_time", "end_time", "room"]
-    search_fields = ["course", "lecturer", "day", "start_time", "end_time", "room"]
-    list_filter = ["day", "course", "room", "start_time", "end_time"]
+    list_display = ('course', 'lecturer', 'day', 'start_time', 'end_time', 'room')

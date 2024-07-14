@@ -63,7 +63,6 @@
 ├── bioattend
 │   ├── admin.py
 │   ├── apps.py
-│   ├── forms.py
 │   ├── __init__.py
 │   ├── management
 │   │   ├── commands
@@ -111,14 +110,8 @@
 │   ├── __pycache__
 │   │   ├── admin.cpython-310.pyc
 │   │   ├── apps.cpython-310.pyc
-│   │   ├── forms.cpython-310.pyc
 │   │   ├── __init__.cpython-310.pyc
 │   │   └── models.cpython-310.pyc
-│   ├── templates
-│   │   ├── admin
-│   │   │   ├── __init__.py
-│   │   │   └── upload_file.html
-│   │   └── __init__.py
 │   ├── tests.py
 │   └── views.py
 ├── build.sh
@@ -7452,6 +7445,14 @@
     │           │   ├── REQUESTED
     │           │   ├── top_level.txt
     │           │   └── WHEEL
+    │           ├── djangorestframework_simplejwt-5.3.1.dist-info
+    │           │   ├── INSTALLER
+    │           │   ├── LICENSE.txt
+    │           │   ├── METADATA
+    │           │   ├── RECORD
+    │           │   ├── REQUESTED
+    │           │   ├── top_level.txt
+    │           │   └── WHEEL
     │           ├── dj_database_url
     │           │   ├── __init__.py
     │           │   ├── __pycache__
@@ -7581,6 +7582,33 @@
     │           │   ├── REQUESTED
     │           │   ├── top_level.txt
     │           │   └── WHEEL
+    │           ├── jwt
+    │           │   ├── algorithms.py
+    │           │   ├── api_jwk.py
+    │           │   ├── api_jws.py
+    │           │   ├── api_jwt.py
+    │           │   ├── exceptions.py
+    │           │   ├── help.py
+    │           │   ├── __init__.py
+    │           │   ├── jwks_client.py
+    │           │   ├── jwk_set_cache.py
+    │           │   ├── __pycache__
+    │           │   │   ├── algorithms.cpython-310.pyc
+    │           │   │   ├── api_jwk.cpython-310.pyc
+    │           │   │   ├── api_jws.cpython-310.pyc
+    │           │   │   ├── api_jwt.cpython-310.pyc
+    │           │   │   ├── exceptions.cpython-310.pyc
+    │           │   │   ├── help.cpython-310.pyc
+    │           │   │   ├── __init__.cpython-310.pyc
+    │           │   │   ├── jwks_client.cpython-310.pyc
+    │           │   │   ├── jwk_set_cache.cpython-310.pyc
+    │           │   │   ├── types.cpython-310.pyc
+    │           │   │   ├── utils.cpython-310.pyc
+    │           │   │   └── warnings.cpython-310.pyc
+    │           │   ├── py.typed
+    │           │   ├── types.py
+    │           │   ├── utils.py
+    │           │   └── warnings.py
     │           ├── numpy
     │           │   ├── char
     │           │   │   ├── __init__.py
@@ -13655,6 +13683,14 @@
     │           │   ├── decouple.cpython-310.pyc
     │           │   ├── six.cpython-310.pyc
     │           │   └── typing_extensions.cpython-310.pyc
+    │           ├── PyJWT-2.8.0.dist-info
+    │           │   ├── AUTHORS.rst
+    │           │   ├── INSTALLER
+    │           │   ├── LICENSE
+    │           │   ├── METADATA
+    │           │   ├── RECORD
+    │           │   ├── top_level.txt
+    │           │   └── WHEEL
     │           ├── python_dateutil-2.9.0.post0.dist-info
     │           │   ├── INSTALLER
     │           │   ├── LICENSE
@@ -14797,6 +14833,170 @@
     │           │   ├── versioning.py
     │           │   ├── viewsets.py
     │           │   └── views.py
+    │           ├── rest_framework_simplejwt
+    │           │   ├── authentication.py
+    │           │   ├── backends.py
+    │           │   ├── exceptions.py
+    │           │   ├── __init__.py
+    │           │   ├── locale
+    │           │   │   ├── ar
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── cs
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── de
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── es
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── es_AR
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── es_CL
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── fa
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── fa_IR
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── fr
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── he_IL
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── id_ID
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── it_IT
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── ko_KR
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── nl_NL
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── pl_PL
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── pt_BR
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── ro
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── ru_RU
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── sl
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── sv
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── tr
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   ├── uk_UA
+    │           │   │   │   └── LC_MESSAGES
+    │           │   │   │       ├── django.mo
+    │           │   │   │       └── django.po
+    │           │   │   └── zh_Hans
+    │           │   │       └── LC_MESSAGES
+    │           │   │           ├── django.mo
+    │           │   │           └── django.po
+    │           │   ├── models.py
+    │           │   ├── __pycache__
+    │           │   │   ├── authentication.cpython-310.pyc
+    │           │   │   ├── backends.cpython-310.pyc
+    │           │   │   ├── exceptions.cpython-310.pyc
+    │           │   │   ├── __init__.cpython-310.pyc
+    │           │   │   ├── models.cpython-310.pyc
+    │           │   │   ├── serializers.cpython-310.pyc
+    │           │   │   ├── settings.cpython-310.pyc
+    │           │   │   ├── state.cpython-310.pyc
+    │           │   │   ├── tokens.cpython-310.pyc
+    │           │   │   ├── utils.cpython-310.pyc
+    │           │   │   └── views.cpython-310.pyc
+    │           │   ├── py.typed
+    │           │   ├── serializers.py
+    │           │   ├── settings.py
+    │           │   ├── state.py
+    │           │   ├── token_blacklist
+    │           │   │   ├── admin.py
+    │           │   │   ├── apps.py
+    │           │   │   ├── __init__.py
+    │           │   │   ├── management
+    │           │   │   │   ├── commands
+    │           │   │   │   │   ├── flushexpiredtokens.py
+    │           │   │   │   │   ├── __init__.py
+    │           │   │   │   │   └── __pycache__
+    │           │   │   │   │       ├── flushexpiredtokens.cpython-310.pyc
+    │           │   │   │   │       └── __init__.cpython-310.pyc
+    │           │   │   │   ├── __init__.py
+    │           │   │   │   └── __pycache__
+    │           │   │   │       └── __init__.cpython-310.pyc
+    │           │   │   ├── migrations
+    │           │   │   │   ├── 0001_initial.py
+    │           │   │   │   ├── 0002_outstandingtoken_jti_hex.py
+    │           │   │   │   ├── 0003_auto_20171017_2007.py
+    │           │   │   │   ├── 0004_auto_20171017_2013.py
+    │           │   │   │   ├── 0005_remove_outstandingtoken_jti.py
+    │           │   │   │   ├── 0006_auto_20171017_2113.py
+    │           │   │   │   ├── 0007_auto_20171017_2214.py
+    │           │   │   │   ├── 0008_migrate_to_bigautofield.py
+    │           │   │   │   ├── 0010_fix_migrate_to_bigautofield.py
+    │           │   │   │   ├── 0011_linearizes_history.py
+    │           │   │   │   ├── 0012_alter_outstandingtoken_user.py
+    │           │   │   │   ├── __init__.py
+    │           │   │   │   └── __pycache__
+    │           │   │   │       ├── 0001_initial.cpython-310.pyc
+    │           │   │   │       ├── 0002_outstandingtoken_jti_hex.cpython-310.pyc
+    │           │   │   │       ├── 0003_auto_20171017_2007.cpython-310.pyc
+    │           │   │   │       ├── 0004_auto_20171017_2013.cpython-310.pyc
+    │           │   │   │       ├── 0005_remove_outstandingtoken_jti.cpython-310.pyc
+    │           │   │   │       ├── 0006_auto_20171017_2113.cpython-310.pyc
+    │           │   │   │       ├── 0007_auto_20171017_2214.cpython-310.pyc
+    │           │   │   │       ├── 0008_migrate_to_bigautofield.cpython-310.pyc
+    │           │   │   │       ├── 0010_fix_migrate_to_bigautofield.cpython-310.pyc
+    │           │   │   │       ├── 0011_linearizes_history.cpython-310.pyc
+    │           │   │   │       ├── 0012_alter_outstandingtoken_user.cpython-310.pyc
+    │           │   │   │       └── __init__.cpython-310.pyc
+    │           │   │   ├── models.py
+    │           │   │   └── __pycache__
+    │           │   │       ├── admin.cpython-310.pyc
+    │           │   │       ├── apps.cpython-310.pyc
+    │           │   │       ├── __init__.cpython-310.pyc
+    │           │   │       └── models.cpython-310.pyc
+    │           │   ├── tokens.py
+    │           │   ├── utils.py
+    │           │   └── views.py
     │           ├── setuptools
     │           │   ├── archive_util.py
     │           │   ├── build_meta.py
@@ -15920,4 +16120,4 @@
     ├── lib64 -> lib
     └── pyvenv.cfg
 
-3578 directories, 12342 files
+3637 directories, 12483 files

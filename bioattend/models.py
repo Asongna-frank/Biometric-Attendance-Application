@@ -1,14 +1,14 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password
+from users.models import User
 
 class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     department_choices = [
         ('computer', 'Computer Engineering'),
         ('electrical', 'Electrical Engineering'),
         ('mechanical', 'Mechanical Engineering'),
         ('civil', 'Civil Engineering'),
     ]
-
     level_choices = [
         ('200', 'Level 200'),
         ('300', 'Level 300'),
@@ -16,50 +16,40 @@ class Student(models.Model):
         ('500', 'Level 500'),
         ('550', 'Level 550'),
     ]
-
-    userID = models.AutoField(primary_key=True)
     matricule = models.CharField(max_length=9, unique=True)
-    studentName = models.CharField(max_length=70)
-    email = models.EmailField(max_length=90, unique=True)
-    password = models.CharField(max_length=128)
     department = models.CharField(max_length=50, choices=department_choices)
     level = models.CharField(max_length=10, choices=level_choices)
 
     class Meta:
-        ordering = ["userID", "studentName", "department", "level"]
-        indexes = [
-            models.Index(fields=["userID", "matricule"]),
-        ]
-
-    def save(self, *args, **kwargs):
-        if self.pk is None or not Student.objects.filter(pk=self.pk).exists():
-            self.password = make_password(self.password)
-        super().save(*args, **kwargs)
+        ordering = ["user__user_name", "department", "level"]
 
     def __str__(self):
-        return self.studentName
+        return f'{self.user.user_name} ({self.matricule})'
 
+class Administrator(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    administratorID = models.AutoField(primary_key=True)
+
+    def __str__(self):
+        return self.user.user_name
 
 class Lecturer(models.Model):
-    userID = models.AutoField(primary_key=True)
-    lecturerName = models.CharField(max_length=70)
-    number = models.CharField(max_length=9, unique=True)
-    email = models.EmailField(max_length=90, unique=True)
-    password = models.CharField(max_length=128)
-
-    class Meta:
-        ordering = ["userID", "lecturerName"]
-
-    def save(self, *args, **kwargs):
-        if self.pk is None or not Lecturer.objects.filter(pk=self.pk).exists():
-            self.password = make_password(self.password)
-        super().save(*args, **kwargs)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    lecturerID = models.AutoField(primary_key=True)
 
     def __str__(self):
-        return self.lecturerName
+        return self.user.user_name
+
 
 
 class Course(models.Model):
+    department_choices = [
+        ('computer', 'Computer Engineering'),
+        ('electrical', 'Electrical Engineering'),
+        ('mechanical', 'Mechanical Engineering'),
+        ('civil', 'Civil Engineering'),
+    ]
+
     semester_choices = [
         ('first', 'First Semester'),
         ('second', 'Second Semester')
@@ -68,6 +58,7 @@ class Course(models.Model):
     courseID = models.AutoField(primary_key=True)
     courseName = models.CharField(max_length=70)
     courseCode = models.CharField(max_length=7)
+    department = models.CharField(max_length=50, choices=department_choices)
     semester = models.CharField(max_length=20, choices=semester_choices)
 
     class Meta:
@@ -112,7 +103,7 @@ class Attendance(models.Model):
     status = models.CharField(max_length=7, choices=status_choices)
 
     class Meta:
-        ordering = ["recordID", "student__studentName", "course__courseName", "-date"]
+        ordering = ["recordID", "student__user__user_name", "course__courseName", "date"]
         indexes = [
             models.Index(fields=["student", "course"]),
         ]

@@ -76,35 +76,11 @@
 │   │       └── __init__.cpython-310.pyc
 │   ├── migrations
 │   │   ├── 0001_initial.py
-│   │   ├── 0002_alter_student_department_alter_student_email_and_more.py
-│   │   ├── 0003_lecturer_rename_fullname_student_studentname.py
-│   │   ├── 0004_course_alter_lecturer_number_teaches.py
-│   │   ├── 0005_alter_lecturer_number.py
-│   │   ├── 0006_attendance.py
-│   │   ├── 0007_remove_attendance_absentcount_and_more.py
-│   │   ├── 0008_enrolls.py
-│   │   ├── 0009_alter_student_options_and_more.py
-│   │   ├── 0010_alter_lecturer_password_alter_student_password.py
-│   │   ├── 0011_timetable_alter_attendance_options_and_more.py
-│   │   ├── 0012_alter_timetable_day.py
-│   │   ├── 0013_remove_student_fingerprint_data_fingerprint.py
-│   │   ├── 0014_delete_fingerprint.py
+│   │   ├── 0002_initial.py
 │   │   ├── __init__.py
 │   │   └── __pycache__
 │   │       ├── 0001_initial.cpython-310.pyc
-│   │       ├── 0002_alter_student_department_alter_student_email_and_more.cpython-310.pyc
-│   │       ├── 0003_lecturer_rename_fullname_student_studentname.cpython-310.pyc
-│   │       ├── 0004_course_alter_lecturer_number_teaches.cpython-310.pyc
-│   │       ├── 0005_alter_lecturer_number.cpython-310.pyc
-│   │       ├── 0006_attendance.cpython-310.pyc
-│   │       ├── 0007_remove_attendance_absentcount_and_more.cpython-310.pyc
-│   │       ├── 0008_enrolls.cpython-310.pyc
-│   │       ├── 0009_alter_student_options_and_more.cpython-310.pyc
-│   │       ├── 0010_alter_lecturer_password_alter_student_password.cpython-310.pyc
-│   │       ├── 0011_timetable_alter_attendance_options_and_more.cpython-310.pyc
-│   │       ├── 0012_alter_timetable_day.cpython-310.pyc
-│   │       ├── 0013_remove_student_fingerprint_data_fingerprint.cpython-310.pyc
-│   │       ├── 0014_delete_fingerprint.cpython-310.pyc
+│   │       ├── 0002_initial.cpython-310.pyc
 │   │       └── __init__.cpython-310.pyc
 │   ├── models.py
 │   ├── __pycache__
@@ -122,6 +98,7 @@
 ├── users
 │   ├── admin.py
 │   ├── apps.py
+│   ├── custom_admin.py
 │   ├── __init__.py
 │   ├── managers.py
 │   ├── migrations
@@ -134,9 +111,11 @@
 │   ├── __pycache__
 │   │   ├── admin.cpython-310.pyc
 │   │   ├── apps.cpython-310.pyc
+│   │   ├── custom_admin.cpython-310.pyc
 │   │   ├── __init__.cpython-310.pyc
 │   │   ├── managers.cpython-310.pyc
-│   │   └── models.cpython-310.pyc
+│   │   ├── models.cpython-310.pyc
+│   │   └── views.cpython-310.pyc
 │   ├── tests.py
 │   └── views.py
 └── venv
@@ -16120,4 +16099,4 @@
     ├── lib64 -> lib
     └── pyvenv.cfg
 
-3637 directories, 12483 files
+3637 directories, 12462 files

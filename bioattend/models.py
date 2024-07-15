@@ -40,8 +40,6 @@ class Lecturer(models.Model):
     def __str__(self):
         return self.user.user_name
 
-
-
 class Course(models.Model):
     department_choices = [
         ('computer', 'Computer Engineering'),
@@ -67,7 +65,6 @@ class Course(models.Model):
     def __str__(self):
         return self.courseName
 
-
 class Teaches(models.Model):
     lecturerID = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
     courseID = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -76,8 +73,7 @@ class Teaches(models.Model):
         unique_together = (('lecturerID', 'courseID'),)
 
     def __str__(self):
-        return f"{self.lecturerID} teaches {self.courseID}"
-
+        return f"{self.lecturerID.user.user_name} teaches {self.courseID.courseName}"
 
 class Enrolls(models.Model):
     studentID = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -87,8 +83,7 @@ class Enrolls(models.Model):
         unique_together = (('studentID', 'courseID'),)
 
     def __str__(self):
-        return f"{self.studentID} enrolled for {self.courseID}"
-
+        return f"{self.studentID.user.user_name} enrolled for {self.courseID.courseName}"
 
 class Attendance(models.Model):
     status_choices = [
@@ -109,8 +104,7 @@ class Attendance(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.student.studentName} - {self.course.courseName}"
-
+        return f"{self.student.user.user_name} - {self.course.courseName}"
 
 class Timetable(models.Model):
     day_choices = [
@@ -122,13 +116,19 @@ class Timetable(models.Model):
         ('saturday', 'Saturday'),
     ]
 
+    room_choices = [
+        ('ground_floor', 'FET Ground Floor'),
+        ('hall1', 'FET Hall 1'),
+        ('hall2', 'FET Hall 2'),
+    ]
+
     timetableID = models.AutoField(primary_key=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     lecturer = models.ForeignKey(Lecturer, on_delete=models.CASCADE)
     day = models.CharField(max_length=10, choices=day_choices)
     start_time = models.TimeField()
     end_time = models.TimeField()
-    room = models.CharField(max_length=50)
+    room = models.CharField(max_length=50, choices=room_choices)
 
     class Meta:
         ordering = ["day", "start_time", "course"]
@@ -137,4 +137,4 @@ class Timetable(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.course.courseName} by {self.lecturer.lecturerName} on {self.day} from {self.start_time} to {self.end_time}"
+        return f"{self.course.courseName} by {self.lecturer.user.user_name} on {self.day} from {self.start_time} to {self.end_time}"

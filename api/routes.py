@@ -8,7 +8,6 @@ from api.viewsets.enrollsViewsets import EnrollsListViewset
 from api.viewsets.usersViewsets import UsersListViewset, LoginView
 from api.viewsets.timetableViewsets import TimetableViewset
 
-
 routes = routers.SimpleRouter()
 
 routes.register('student', StudentListViewset, basename='Student')
@@ -21,8 +20,4 @@ routes.register('users', UsersListViewset, basename='Users')
 routes.register('timetable', TimetableViewset, basename='Timetable')
 routes.register('auth/login', LoginView, basename='Login')
 
-
 urlpatterns = routes.urls
-
-#API URL configuration
-# localhost:8000/api/students

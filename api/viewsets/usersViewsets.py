@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework_simplejwt.exceptions import TokenError,InvalidToken
+from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 from api.serializers.users import UserSerializer, LoginSerializer
 from users.models import User
 from api.permissions import UserPermissions
@@ -17,6 +17,13 @@ class UsersListViewset(viewsets.ModelViewSet):
         user = User.objects.get_object_by_public_id(public_id)
         return user
 
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
 class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]
@@ -36,8 +43,6 @@ class LoginView(viewsets.ViewSet):
         serializer = self.serializer_class(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
-
         except TokenError as e:
             raise InvalidToken(e)
-
         return Response(serializer.validated_data, status=status.HTTP_200_OK)

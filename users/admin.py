@@ -5,18 +5,18 @@ from users.custom_admin import custom_admin_site
 
 @admin.register(User, site=custom_admin_site)
 class CustomUserAdmin(BaseUserAdmin):
-    list_display = ['user_name', 'email', 'number', 'is_staff']
+    list_display = ['user_name', 'email', 'number', 'is_staff', 'image']
     search_fields = ['email', 'user_name']
     ordering = ['user_name']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('user_name', 'number')}),
+        ('Personal info', {'fields': ('user_name', 'number', 'image')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'user_name', 'number', 'password1', 'password2'),
+            'fields': ('email', 'user_name', 'number', 'password1', 'password2', 'image'),
         }),
     )

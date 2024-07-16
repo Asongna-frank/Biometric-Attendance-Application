@@ -8,10 +8,11 @@ from bioattend.models import Student, Lecturer
 class UserSerializer(serializers.ModelSerializer):
     role = serializers.SerializerMethodField()
     id = serializers.UUIDField(source='public_id', read_only=True)
+    image = serializers.ImageField(required=False)  # Add image field
 
     class Meta:
         model = User
-        fields = ['id', 'user_name', 'email', 'number', 'role']
+        fields = ['id', 'user_name', 'email', 'number', 'role', 'image']
 
     def get_role(self, obj):
         if Student.objects.filter(user=obj).exists():

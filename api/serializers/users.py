@@ -7,7 +7,7 @@ from bioattend.models import Student, Lecturer
 
 class UserSerializer(serializers.ModelSerializer):
     role = serializers.SerializerMethodField()
-    id = serializers.UUIDField(source='public_id', read_only=True)
+    #id = serializers.UUIDField(source='public_id', read_only=True)
     image = serializers.ImageField(required=False)  # Add image field
 
     class Meta:

@@ -7,10 +7,11 @@ from bioattend.models import Student, Lecturer
 
 class UserSerializer(serializers.ModelSerializer):
     role = serializers.SerializerMethodField()
+    id = serializers.UUIDField(source='public_id', read_only=True)
 
     class Meta:
         model = User
-        fields = ['public_id', 'user_name', 'email', 'number', 'role']
+        fields = ['id', 'user_name', 'email', 'number', 'role']
 
     def get_role(self, obj):
         if Student.objects.filter(user=obj).exists():

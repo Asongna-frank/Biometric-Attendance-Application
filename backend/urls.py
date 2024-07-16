@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from users.custom_admin import custom_admin_site
-from api.viewsets.usersViewsets import PublicView, ProtectedView, LoginView
+from api.viewsets.usersViewsets import PublicView, ProtectedView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,

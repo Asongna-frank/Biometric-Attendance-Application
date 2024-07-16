@@ -4,9 +4,10 @@ import uuid
 
 from .managers import CustomUserManager
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     public_id = models.UUIDField(db_index=True, unique=True, editable=False, default=uuid.uuid4)
-    user_name = models.CharField(max_length=90, unique = True )
+    user_name = models.CharField(max_length=90, unique=True)
     email = models.EmailField(db_index=True, unique=True)
     number = models.CharField(max_length=15)
     is_active = models.BooleanField(default=True)

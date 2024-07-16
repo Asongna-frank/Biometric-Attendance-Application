@@ -8,10 +8,15 @@ from users.models import User
 from api.permissions import UserPermissions
 
 class UsersListViewset(viewsets.ModelViewSet):
-    permission_classes = [UserPermissions]
     http_method_names = ['get', 'patch']
     serializer_class = UserSerializer
     queryset = User.objects.all()
+
+    def get_object(self):
+        public_id = self.kwargs.get('pk')
+        user = User.objects.get_object_by_public_id(public_id)
+        return user
+
 
 class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]

@@ -9,10 +9,8 @@ class CustomUserManager(BaseUserManager):
         try:
             instance = self.get(public_id=public_id)
             return instance
-
         except ObjectDoesNotExist:
             raise Http404("Object does not exist")
-
         except (ValueError, TypeError, ValidationError):
             raise Http404("Invalid public_id")
 

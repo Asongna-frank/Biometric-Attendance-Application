@@ -13,11 +13,14 @@ class CourseListViewset(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Course.objects.all()
+        courseID = self.request.query_params.get('courseID', None)
 
         course_name = self.request.query_params.get('courseName', None)
         course_code = self.request.query_params.get('courseCode', None)
         semester = self.request.query_params.get('semester', None)
 
+        if courseID is not None:
+            queryset = queryset.filter(courseID__icontains=courseID)
         if course_name is not None:
             queryset = queryset.filter(courseName__icontains=course_name)
         if course_code is not None:

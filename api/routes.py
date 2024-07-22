@@ -3,7 +3,7 @@ from api.viewsets.studentViewsets import StudentListViewset
 from api.viewsets.lecturerViewsets import LecturerListViewset
 from api.viewsets.courseViewsets import CourseListViewset
 from api.viewsets.teachesViewsets import TeachesListViewset
-from api.viewsets.attendanceViewsets import AttendanceListViewset
+from api.viewsets.attendanceViewsets import AttendanceListViewset, StudentAttendanceView, LecturerAttendanceView
 from api.viewsets.enrollsViewsets import EnrollsListViewset
 from api.viewsets.usersViewsets import UsersListViewset, StudentLoginView, LecturerLoginView
 from api.viewsets.timetableViewsets import TimetableViewset, StudentTimetableView, LecturerTimetableView
@@ -23,5 +23,7 @@ routes.register('auth/login/lecturer', LecturerLoginView, basename='Lecturer_Log
 
 routes.register('timetable/student', StudentTimetableView, basename='Student_Timetable')
 routes.register('timetable/lecturer', LecturerTimetableView, basename='Lecturer_Timetable')
+routes.register('attendance/student', StudentAttendanceView, basename='Student_Attendance')
+routes.register('attendance/lecturer', LecturerAttendanceView, basename='Lecturer_Attendance')
 
 urlpatterns = routes.urls

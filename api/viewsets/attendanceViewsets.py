@@ -1,11 +1,10 @@
+from django.utils.dateparse import parse_date
 from rest_framework import viewsets, status
-from api.serializers.attendance import AttendanceSerializer, StudentAttendanceInputSerializer, \
-    LecturerAttendanceInputSerializer
+from api.serializers.attendance import AttendanceSerializer, StudentAttendanceInputSerializer, StudentSerializerAttendance as StudentSerializer, LecturerAttendanceInputSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from api.serializers.timetable import StudentTimetableInputSerializer
-from bioattend.models import Attendance
-from django.utils.dateparse import parse_date
+from bioattend.models import Attendance, Student, Teaches, Lecturer
+
 
 class AttendanceListViewset(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'put', 'patch', 'delete']
@@ -48,7 +47,6 @@ class AttendanceListViewset(viewsets.ModelViewSet):
 
         return queryset
 
-
 class StudentAttendanceView(viewsets.ViewSet):
     @action(detail=False, methods=['post'])
     def get_student_attendance(self, request):
@@ -63,17 +61,32 @@ class StudentAttendanceView(viewsets.ViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class LecturerAttendanceView(viewsets.ViewSet):
+    http_method_names = ['post']
+
     @action(detail=False, methods=['post'])
     def get_lecturer_attendance(self, request):
-        serializer = LecturerAttendanceInputSerializer(data=request.data)
-        if serializer.is_valid():
-            course_ids = serializer.validated_data['courseIDs']
+        lecturer_id = request.data.get('lecturerID')
+        if not lecturer_id:
+            return Response({'error': 'Lecturer ID is required'}, status=status.HTTP_400_BAD_REQUEST)
 
-            attendance_records = Attendance.objects.filter(course_id__in=course_ids)
-            attendance_serializer = AttendanceSerializer(attendance_records, many=True)
+        try:
+            lecturer = Lecturer.objects.get(lecturerID=lecturer_id)
+        except Lecturer.DoesNotExist:
+            return Response({'error': 'Lecturer not found'}, status=status.HTTP_404_NOT_FOUND)
 
-            return Response(attendance_serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        teaches = Teaches.objects.filter(lecturerID=lecturer)
+        course_ids = [teach.courseID.courseID for teach in teaches]  # Use 'courseID' if that's the field name
+        attendance_records = Attendance.objects.filter(course__courseID__in=course_ids)  # Use 'courseID' if that's the field name
+
+        data = []
+        for record in attendance_records:
+            record_data = AttendanceSerializer(record).data
+            student = Student.objects.get(id=record.student.id)
+            student_serializer = StudentSerializer(student)
+            print(f"Serialized student data: {student_serializer.data}")  # Debugging line
+            record_data['student_name'] = student_serializer.data.get('user_name')
+            record_data['student_image'] = student_serializer.data.get('image')
+            data.append(record_data)
+
+        return Response(data, status=status.HTTP_200_OK)

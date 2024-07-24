@@ -3,10 +3,10 @@ from bioattend.models import Attendance, Student, Lecturer
 from rest_framework import serializers
 
 
-# class AttendanceSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Attendance
-#         fields = '__all__'
+class AttendanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendance
+        fields = '__all__'
 
 
 
@@ -37,7 +37,7 @@ class StudentSerializerAttendance(serializers.ModelSerializer):
         model = Student
         fields = ['id', 'user_name', 'image']
 
-class AttendanceSerializer(serializers.ModelSerializer):
+class AttendanceSerializer1(serializers.ModelSerializer):
     student_name = serializers.CharField(source='student.user.user_name')
     student_image = serializers.ImageField(source='student.user.image')
 

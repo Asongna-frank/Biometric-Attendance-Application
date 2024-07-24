@@ -1,6 +1,6 @@
 from django.utils.dateparse import parse_date
 from rest_framework import viewsets, status
-from api.serializers.attendance import AttendanceSerializer, StudentAttendanceInputSerializer, StudentSerializerAttendance as StudentSerializer, LecturerAttendanceInputSerializer
+from api.serializers.attendance import AttendanceSerializer, AttendanceSerializer1, StudentAttendanceInputSerializer, StudentSerializerAttendance as StudentSerializer, LecturerAttendanceInputSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from bioattend.models import Attendance, Student, Teaches, Lecturer
@@ -55,7 +55,7 @@ class StudentAttendanceView(viewsets.ViewSet):
             student_id = serializer.validated_data['studentID']
 
             attendance_records = Attendance.objects.filter(student__id=student_id)
-            attendance_serializer = AttendanceSerializer(attendance_records, many=True)
+            attendance_serializer = AttendanceSerializer1(attendance_records, many=True)
 
             return Response(attendance_serializer.data, status=status.HTTP_200_OK)
         else:
@@ -81,7 +81,7 @@ class LecturerAttendanceView(viewsets.ViewSet):
 
         data = []
         for record in attendance_records:
-            record_data = AttendanceSerializer(record).data
+            record_data = AttendanceSerializer1(record).data
             student = Student.objects.get(id=record.student.id)
             student_serializer = StudentSerializer(student)
             print(f"Serialized student data: {student_serializer.data}")  # Debugging line
